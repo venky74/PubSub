@@ -23,7 +23,7 @@ class Controller{
     public boolean publish(Message msg){
 
         this.msg = msg;
-        System.out.println("Message Publish from Publisher " + this + " " + this.msg.topic + " " + this.msg.body);
+        System.out.println("Message Publish from Publisher " + this + " to Topic " + this.msg.topic + " Message is - " + this.msg.body);
 
         if (Controller.topicTable.containsKey(this.msg.topic)) {
             Controller.topicTable.get(this.msg.topic).add(this.msg.body);
@@ -32,6 +32,8 @@ class Controller{
             ntopic.add(this.msg.body);
             Controller.topicTable.put(this.msg.topic, ntopic);
         }
+
+
         return true;
     }
 }
@@ -49,7 +51,7 @@ class Topics {
     }
 
     public boolean add(String msgBody) {
-        System.out.println(this + " " + this.subscribers + " " + msgBody + " " + "Dispatch message");
+        System.out.println(this + " received message " + msgBody + " for subscribers " + this.subscribers + " " + "Dispatch message");
         dispatchMessage(msgBody);
         return this.topicItems.add(msgBody);
     }
@@ -74,7 +76,7 @@ class Topics {
 class Subscriber{
 
     public Subscriber(Topics topicName){
-        System.out.println("Subscriber Created " + this + " bound to topic" + topicName.topicName );
+        System.out.println("Subscriber Created " + this + " bound to topic " + topicName.topicName );
         topicName.addSubscriber(this);
     }
 
@@ -111,17 +113,25 @@ public class PubSub {
 
         Publisher pu1 = new Publisher("Publisher1");
         Publisher pu2 = new Publisher("Publisher2");
+        System.out.println("===============================================");
 
         Topics topic1 = new Topics("topic1");
         Topics topic2 = new Topics("topic2");
+        System.out.println("===============================================");
 
         Subscriber sub1 = new Subscriber(topic1);
         Subscriber sub2 = new Subscriber(topic1);
         Subscriber sub3 = new Subscriber(topic2);
+        System.out.println("===============================================");
 
         boolean b = pu1.publish(new Message("topic1", "Need Uber"));
+        System.out.println("===============================================");
+
         boolean c = pu1.publish(new Message("topic1", "Need UberX"));
+        System.out.println("===============================================");
+
         boolean d = pu1.publish(new Message("topic2", "Need Uber"));
+        System.out.println("===============================================");
 
     }
 
