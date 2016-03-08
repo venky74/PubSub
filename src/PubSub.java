@@ -133,6 +133,8 @@ public class PubSub {
         boolean d = pu1.publish(new Message("topic2", "Need Uber"));
         System.out.println("===============================================");
 
+        System.out.println("===============================================");
+
     }
 
 }
